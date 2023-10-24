@@ -1,0 +1,103 @@
+h1,h2,h3,h4,h5,h6 {
+  color: white;
+}
+
+body {
+  background-color: rgb(54, 54, 54);
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+.al-center {
+  align-items: center;
+}
+.just-center {
+  justify-content: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+}
+input {
+  margin: 5%;
+  font-size: 3em;
+}
+.logpass {
+  width: 100%;
+}
+.login {
+  margin-top: 15%;
+  width: 80%;
+  font-size: 5em;
+}
+form>h1 {
+  color: white;
+  font-size: 4em;
+}
+header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 10%;
+  background-color: rgb(37, 37, 37);
+  display: flex;
+  flex-direction: row-reverse;
+}
+.popup-buttons-div {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  justify-content: right;
+  align-items: end;
+}
+.popup-buttons-div>button {
+  height: 20%;
+  width: 30%;
+  font-size: 3em;
+  margin: 5%;
+}
+.inventory {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 90%;
+  overflow-y: scroll;
+}
+.inventory-item {
+  max-width: 90%;
+  height: 20%;
+  margin: 5%;
+  border: black 1px solid;
+  padding: 3%;
+}
+.inventory-item>h1 {
+  font-size: 5em;
+}
+.inventory-item>h2 {
+  font-size: 4em;
+}
+td>input{
+  font-size: 1.5em;
+  color: black;
+  width: 100%;
+}
+td>input[type="submit"]{
+  font-size: 1.5em;
+  color: black;
+  width: 100%;
+}
+td {
+  width: 20%;
+  font-size: 3em;
+  color: white;
+  padding: 2%;
+  border: solid white 1px;
+}
