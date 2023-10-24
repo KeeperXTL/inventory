@@ -10,7 +10,7 @@ import ua.keeperxtl.inventory.db.repository.InventoryRepository;
 
 import java.util.List;
 
-@Controller
+@Controller("/")
 public class IndexController {
     @Autowired
     InventoryRepository inventoryRepository;
