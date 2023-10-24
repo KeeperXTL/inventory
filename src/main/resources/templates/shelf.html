@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport">
+  <title>Список полок</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<header>
+  <div style="width: 50%;justify-content: end;display: flex;">
+  </div>
+  <div style="width: 50%">
+    <h1 style="font-size: 10em; margin-left: 5%; margin-top: auto; margin-bottom: auto" th:onclick="'window.open(\'/rack/' + ${rackId} + '\', \'_self\')'"><</h1>
+  </div>
+</header>
+<body>
+<div class="inventory">
+  <table>
+    <tbody>
+    <form action="/addItem" method="get">
+    <tr>
+      <td><input type="number" step="any" name="count" placeholder="Количество"></td>
+      <td><input type="number" step="any" name="price" placeholder="Цена"></td>
+      <td><input type="hidden" name="shelfId" th:value="${shelfId}"><input type="submit" value="+"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    </form>
+    <tr th:each="item : ${items}">
+      <td th:text="${item.getCount()}" th:id="'item-count-' + ${item.getItemId()}"></td>
+      <td th:text="${item.getPrice()}" th:id="'item-price-' + ${item.getItemId()}"></td>
+      <td th:text="${item.getCount() * item.getPrice()}"></td>
+      <td th:id="'item-confirm-' + ${item.getItemId()}"><img th:id="'item-edit-image-' + ${item.getItemId()}" src="/pencil.png" style="width: 64px; filter: invert(1)" th:onclick="'editItem(' + ${item.getItemId()} + ')'"></td>
+      <td><img src="/trash.png" style="width: 64px; filter: invert(1)" th:onclick="'deleteItem(' + ${item.getItemId()} + ')'"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+<script>
+  function saveItem(itemId) {
+    let countItem = document.querySelector('#input-count-' + itemId);
+    let priceItem = document.querySelector('#input-price-' + itemId);
+    fetch('/editItem?count=' + countItem.value + '&price=' + priceItem.value + '&itemId=' + itemId).then(responce => {
+      window.location.reload();})
+    }
+  function editItem(itemId) {
+    let countElement = document.querySelector('#item-count-' + itemId);
+    let priceElement = document.querySelector('#item-price-' + itemId);
+    let confirmElement = document.querySelector('#item-confirm-' + itemId);
+    let editElement = document.querySelector('#item-edit-image-' + itemId);
+    let count = countElement.textContent;
+    let price = priceElement.textContent;
+    countElement.textContent = '';
+    priceElement.textContent = '';
+    let countInput = document.createElement("input");
+    let priceInput = document.createElement("input");
+    countInput.setAttribute("value", count);
+    priceInput.setAttribute("value", price);
+    countInput.setAttribute("type", "number");
+    priceInput.setAttribute("type", "number");
+    countInput.setAttribute("id", "input-count-" + itemId);
+    priceInput.setAttribute("id", "input-price-" + itemId);
+    countElement.appendChild(countInput);
+    priceElement.appendChild(priceInput);
+    editElement.remove();
+    let saveImage = document.createElement("img");
+    saveImage.setAttribute("src", "/save.png");
+    saveImage.setAttribute("style", "width: 64px; filter: invert(1)");
+    saveImage.setAttribute("onclick", "saveItem(" + itemId + ")");
+    confirmElement.appendChild(saveImage);
+  }
+  function deleteItem(path) {
+    var result = confirm("Удалить данную позицию?");
+    if (result) {
+      fetch('/deleteItem/' + path).then(responce => {
+        window.location.reload()
+      }) }
+  }
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Список переучётов</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<header>
+    <h1 style="font-size: 10em; margin-right: 5%; margin-top: auto; margin-bottom: auto" onclick="createInventory()">+</h1>\
+</header>
+<body>
+    <div class="inventory">
+        <div class="inventory-item" th:each="inventory : ${inventories}">
+            <h1 th:text="'Переучёт ' + ${inventory.getDate()}" th:onclick="'window.open(\'/inventory/' + ${inventory.getInventoryId()} + '\', \'_self\')'"></h1>
+            <h2 th:text="${inventory.getUser().getName()}"></h2>
+            <img src="/trash.png" style="width: 48px; filter: invert(1)" th:onclick="'deleteInventory(' + ${inventory.getInventoryId()} + ')'">
+        </div>
+    </div>
+</body>
+<script>
+    function createInventory() {
+        var result = confirm("Создать новый переучёт?");
+        if (result) {
+        fetch("/createInventory").then(responce => {
+            window.location.reload()
+        })}
+    }
+    function deleteInventory(path) {
+        var result = confirm("Удалить данный переучёт?");
+        if (result) {
+        fetch('/deleteInventory/' + path).then(responce => {
+            window.location.reload()
+        }) }
+    }
+</script>
+</html>
